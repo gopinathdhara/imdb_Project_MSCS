@@ -12,6 +12,7 @@ const movieSlice = createSlice({
     movieSlc: [],
     loading: false,
     error: false,
+    totalPages: 1,
   },
 
   reducers: {
@@ -28,9 +29,13 @@ const movieSlice = createSlice({
       state.movieSlc = action.payload;
       state.error = false;
     },
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload;
+    },
   },
 });
 // named export - Action creator functions
-export const { movieLoading, movieError, movieData } = movieSlice.actions;
+export const { movieLoading, movieError, movieData, setTotalPages } =
+  movieSlice.actions;
 // Store needs reducer to manage state.
 export default movieSlice.reducer;

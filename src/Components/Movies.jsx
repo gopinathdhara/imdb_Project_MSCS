@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fetchMovies from "../Redux/fetchMovies";
-import { handleNext, handlePrevious } from "../Redux/paginationSlice";
+import {
+  handleNext,
+  handlePrevious,
+  resetPage,
+} from "../Redux/paginationSlice";
 import { addWatchList, removeWatchList } from "../Redux/watchlistSlice";
 
 function Movies() {
@@ -12,15 +16,41 @@ function Movies() {
   const { movieSlc, loading, error } = useSelector((state) => state.movies);
   const pageNo = useSelector((state) => state.pagination.pageNo);
   const watchList = useSelector((state) => state.watch_list.watchlist);
+  const [searchText, setSearchText] = useState("");
+  const totalPages = useSelector((state) => state.movies.totalPages);
+
+  //Add debounce (prevents too many API calls)
+
+  //  Instead of calling dispatch(fetchMovies(...)) immediately, it waits 500ms.
+  // If the user keeps typing or changing pageNo quickly, the timer resets each time
+  // Only after the user stops changing values for 2000ms the API call actually fire
+  // Debounce always waits for silence.
+  // If typing continues → no silence → no API.
+
+  //   Render 1
+  // → Effect 1 (debounce)
+  // → Effect 2 (resetPage)
+
+  // resetPage updates pageNo
+
+  // Render 2
+  // → Effect 1 runs again (because pageNo changed)
 
   useEffect(() => {
     if (!TOKEN) {
       console.error("TMDB Token is missing");
       return;
     }
+    //Add debounce for performance improve
+    const timer = setTimeout(() => {
+      dispatch(fetchMovies(pageNo, searchText));
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [pageNo, searchText]);
 
-    dispatch(fetchMovies(pageNo));
-  }, [pageNo]);
+  useEffect(() => {
+    dispatch(resetPage()); // whenever search changes, go back to page 1
+  }, [searchText]);
 
   function handleprev() {
     dispatch(handlePrevious());
@@ -49,6 +79,15 @@ function Movies() {
     <>
       <div className="text-2xl font-bold text-center m-5">
         <h1>Trending Movies</h1>
+        <div className="flex justify-center my-4">
+          <input
+            type="text"
+            placeholder="Search Movies..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            className="border border-gray-400 rounded-md px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
       </div>
       <div className="flex justify-evenly text-center gap-8 flex-wrap">
         {movieSlc?.map((item, index) => {
@@ -80,13 +119,13 @@ function Movies() {
         })}
       </div>
       <div className="bg-gray-400 p-4 h-[50px] mt-8 w-full flex justify-center gap-4">
-        <div onClick={handleprev}>
+        <button onClick={handleprev}>
           <i class="fa-solid fa-arrow-left"></i>
-        </div>
-        {pageNo}
-        <div onClick={handlenext}>
+        </button>
+        {pageNo} 
+        <button onClick={handlenext} disabled={pageNo >= totalPages}>
           <i class="fa-solid fa-arrow-right"></i>
-        </div>
+        </button>
       </div>
     </>
   );

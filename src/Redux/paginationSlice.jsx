@@ -20,8 +20,12 @@ const paginationSlice = createSlice({
         state.pageNo = state.pageNo - 1;
       }
     },
+    resetPage: (state) => {
+      state.pageNo = 1;
+    },
   },
 });
 
-export const { handlePrevious, handleNext } = paginationSlice.actions;
+export const { handlePrevious, handleNext, resetPage } =
+  paginationSlice.actions;
 export default paginationSlice.reducer;
