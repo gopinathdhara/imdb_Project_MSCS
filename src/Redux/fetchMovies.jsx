@@ -10,6 +10,7 @@ import axios from "axios";
 
 const fetchmovies = (pageNo) => {
   const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+  console.log("TOKEN in fetchMovies:", import.meta.env.VITE_TMDB_TOKEN);
   return async (dispatch) => {
     try {
       dispatch(movieLoading());
