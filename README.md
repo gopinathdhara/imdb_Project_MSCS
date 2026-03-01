@@ -37,3 +37,11 @@ This project was developed as part of my **Master of Science in Computer Science
 ---
 
 ## 📂 Project Structure
+```
+src/
+├── components/
+├── pages/
+├── redux/
+├── App.jsx
+└── main.jsx
+```
