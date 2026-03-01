@@ -17,6 +17,10 @@ This project was developed as part of my **Master of Science in Computer Science
 - 🔎 Movie Search
 - 📄 Pagination
 - ⭐ Movie Details
+- ❤️ Add to Watchlist
+- 🗂️ View Watchlist
+- 🔃 Sort Watchlist (Ascending / Descending)
+- 🔍 Search Inside Watchlist
 - 🧠 Global State Management using Redux Toolkit
 - ⚡ Fast UI with Vite
 - 🎨 Responsive UI using Tailwind CSS
