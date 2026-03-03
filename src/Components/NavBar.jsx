@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavBar() {
   return (
     <>
-    <div className="flex gap-4">
+    <div className="flex gap-4 nav-bar-cls">
  <Link to="/">
         <img
           className="w-[70px]"

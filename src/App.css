@@ -70,3 +70,12 @@
   background: linear-gradient(135deg, #1e40af, #1d4ed8);
   transform: scale(1.05);
 }
+.nav-bar-cls {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
