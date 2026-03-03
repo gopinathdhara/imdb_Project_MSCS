@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fetchMovies from "../Redux/fetchMovies";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaEye } from "react-icons/fa";
 import {
   handleNext,
   handlePrevious,
@@ -9,6 +12,7 @@ import {
 import { addWatchList, removeWatchList } from "../Redux/watchlistSlice";
 
 function Movies() {
+  const navigate = useNavigate();
   const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
   //useDispatch hook
   const dispatch = useDispatch();
@@ -71,9 +75,38 @@ function Movies() {
     dispatch(removeWatchList(movieobj));
   }
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  // if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex flex-col items-center justify-center mt-20">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-600 font-semibold">Loading movies...</p>
+      </div>
+    );
+  // if (error)
+  //   return <div className="text-center mt-10">Error loading movies</div>;
+
   if (error)
-    return <div className="text-center mt-10">Error loading movies</div>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+        <div className="bg-red-100 text-red-600 p-4 rounded-full mb-4">❌</div>
+
+        <h2 className="text-xl font-bold text-red-600">
+          Oops! Something went wrong.
+        </h2>
+
+        <p className="text-gray-600 mt-2">
+          We couldn't load the movies. Please try again.
+        </p>
+
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-5 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+        >
+          Retry
+        </button>
+      </div>
+    );
 
   return (
     <>
@@ -94,26 +127,39 @@ function Movies() {
           const imgPath = item.backdrop_path || item.poster_path;
           const check_if_contain = doescontain(item);
           return (
-            <div
-              key={item.id}
-              className="h-[40vh] w-[200px] rounded-xl flex flex-col bg-cover bg-center flex"
-              style={{
-                backgroundImage: `url(https://image.tmdb.org/t/p/original/${imgPath})`,
-              }}
-            >
-              {check_if_contain ? (
-                <div
-                  className="m-4 flex "
-                  onClick={() => removeFromWatchList(item)}
-                >
-                  ❌
-                </div>
-              ) : (
-                <div className="m-4 flex " onClick={() => addToWatchList(item)}>
-                  😍
-                </div>
-              )}
-              <div className="text-white text-xl p-2">{item.title}</div>
+            <div className="movie-card">
+              <div
+                key={item.id}
+                className="h-[40vh] w-[200px] rounded-xl flex flex-col bg-cover bg-center flex poster-wrap"
+                style={{
+                  backgroundImage: `url(https://image.tmdb.org/t/p/original/${imgPath})`,
+                  cursor: "pointer",
+                }}
+              >
+                {check_if_contain ? (
+                  <div
+                    className="m-4 flex "
+                    onClick={() => removeFromWatchList(item)}
+                  >
+                    ❌
+                  </div>
+                ) : (
+                  <div
+                    className="m-4 flex "
+                    onClick={() => addToWatchList(item)}
+                  >
+                    😍
+                  </div>
+                )}
+                <div className="text-white text-xl p-2">{item.title}</div>
+
+                {/* Movie Details Button */}
+              </div>
+              <div>
+                <Link to={`/movie-details/${item.id}`}>
+                  <button class="mybutton">View Details</button>
+                </Link>
+              </div>
             </div>
           );
         })}
@@ -122,7 +168,7 @@ function Movies() {
         <button onClick={handleprev}>
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        {pageNo} 
+        {pageNo}
         <button onClick={handlenext} disabled={pageNo >= totalPages}>
           <i class="fa-solid fa-arrow-right"></i>
         </button>

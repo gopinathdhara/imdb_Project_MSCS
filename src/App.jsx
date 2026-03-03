@@ -7,12 +7,13 @@ import React, { Suspense, lazy } from "react";
 
 // lazy() is outside App()  (best practice)
 
-// No normal imports of Home / WatchList 
+// No normal imports of Home / WatchList
 
-// Wrapped routes inside Suspense 
+// Wrapped routes inside Suspense
 
 const Home = lazy(() => import("./Components/Home"));
 const WatchList = lazy(() => import("./Components/WatchList"));
+const MovieDetails = lazy(() => import("./Components/MovieDetails"));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/watchlist" element={<WatchList />}></Route>
+          <Route path="/movie-details/:id" element={<MovieDetails />}></Route>
         </Routes>
       </Suspense>
     </>

@@ -40,3 +40,33 @@
 .read-the-docs {
   color: #888;
 }
+.details-btn {
+  background-color: #1e40af; /* blue background */
+  color: white;
+  font-weight: bolder;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.details-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.mybutton {
+  /* background: #4a8dff; */
+  color: white;
+  border-radius: 6px;
+  padding: 2px;
+  margin: 3px;
+  width: 100%;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.mybutton:hover {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+  transform: scale(1.05);
+}
