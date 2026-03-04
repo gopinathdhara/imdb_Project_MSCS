@@ -10,6 +10,7 @@ import {
   resetPage,
 } from "../Redux/paginationSlice";
 import { addWatchList, removeWatchList } from "../Redux/watchlistSlice";
+import { addFavouriteList, removeFavouriteList } from "../Redux/favouriteSlice";
 
 function Movies() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Movies() {
   const watchList = useSelector((state) => state.watch_list.watchlist);
   const [searchText, setSearchText] = useState("");
   const totalPages = useSelector((state) => state.movies.totalPages);
+  const favouriteList = useSelector((state) => state.favourites.favouritelist);
 
   //Add debounce (prevents too many API calls)
 
@@ -75,6 +77,20 @@ function Movies() {
     dispatch(removeWatchList(movieobj));
   }
 
+  // ############################# for favourite section ###############################
+
+  function doesContainFavourite(movie_obj) {
+    return favouriteList?.some((item) => item.id === movie_obj.id);
+  }
+  function addToFavouriteList(movieobj) {
+    dispatch(addFavouriteList(movieobj));
+  }
+
+  function removeToFavouriteList(movieobj) {
+    dispatch(removeFavouriteList(movieobj));
+  }
+  //#################################################################################
+
   // if (loading) return <div className="text-center mt-10">Loading...</div>;
   if (loading)
     return (
@@ -126,6 +142,7 @@ function Movies() {
         {movieSlc?.map((item, index) => {
           const imgPath = item.backdrop_path || item.poster_path;
           const check_if_contain = doescontain(item);
+          const check_if_favourite_contain = doesContainFavourite(item);
           return (
             <div className="movie-card">
               <div
@@ -138,24 +155,40 @@ function Movies() {
               >
                 {check_if_contain ? (
                   <div
-                    className="m-4 flex "
+                    className="m-4 flex watchlist-icon"
                     onClick={() => removeFromWatchList(item)}
                   >
                     ❌
                   </div>
                 ) : (
                   <div
-                    className="m-4 flex "
+                    className="m-4 flex watchlist-icon"
                     onClick={() => addToWatchList(item)}
                   >
                     😍
                   </div>
                 )}
+
                 <div className="text-white text-xl p-2">{item.title}</div>
 
                 {/* Movie Details Button */}
               </div>
-              <div>
+              <div style={{ display: "flex" }}>
+                {check_if_favourite_contain ? (
+                  <div
+                    className="m-4 flex favorite-icon"
+                    onClick={() => removeToFavouriteList(item)}
+                  >
+                    <i className="fa-solid fa-heart"></i>
+                  </div>
+                ) : (
+                  <div
+                    className="m-4 flex favorite-icon"
+                    onClick={() => addToFavouriteList(item)}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </div>
+                )}
                 <Link to={`/movie-details/${item.id}`}>
                   <button class="mybutton">View Details</button>
                 </Link>

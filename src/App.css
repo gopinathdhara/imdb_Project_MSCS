@@ -59,12 +59,13 @@
   /* background: #4a8dff; */
   color: white;
   border-radius: 6px;
-  padding: 2px;
-  margin: 3px;
+  padding: 4px;
+  margin-top: 12px;
   width: 100%;
   background: linear-gradient(135deg, #2563eb, #1e40af);
   cursor: pointer;
   transition: 0.3s ease;
+  margin-left: 3px;
 }
 .mybutton:hover {
   background: linear-gradient(135deg, #1e40af, #1d4ed8);
@@ -78,4 +79,99 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
+.watchlist-icon {
+  font-size: 18px; /* increase icon size */
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 14%;
+  height: 25px;
+  background: aliceblue;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+/* .watchlist-icon:hover {
+  font-size: 25px;
+} */
+
+.favorite-icon {
+  color: red;
+  font-size: 24px;
+  cursor: pointer;
+}
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link.active {
+  background: #ffd700;
+  color: #000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.nav-link {
+  min-width: 120px;
+  text-align: center;
+}
+.mybutton1 {
+  /* background: #4a8dff; */
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+  width: 60%;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-left: 3px;
+}
+.mybutton1:hover {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+  transform: scale(1.05);
+}
+
+.mybutton2 {
+  /* background: #4a8dff; */
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+  width: 55%;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-left: 3px;
+}
+.mybutton2:hover {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+  transform: scale(1.05);
+}
+
+.watchlist-icon1 {
+  font-size: 18px; /* increase icon size */
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 19%;
+  height: 25px;
+  background: aliceblue;
+  border-radius: 5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  text-align: center;
 }

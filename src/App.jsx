@@ -14,6 +14,7 @@ import React, { Suspense, lazy } from "react";
 const Home = lazy(() => import("./Components/Home"));
 const WatchList = lazy(() => import("./Components/WatchList"));
 const MovieDetails = lazy(() => import("./Components/MovieDetails"));
+const Favourite = lazy(() => import("./Components/Favourite"));
 
 function App() {
   return (
@@ -25,8 +26,10 @@ function App() {
       <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />}></Route>
+           <Route path="/movies" end element={<Home />}></Route>
           <Route path="/watchlist" element={<WatchList />}></Route>
           <Route path="/movie-details/:id" element={<MovieDetails />}></Route>
+          <Route path="/favouritelist" element={<Favourite />}></Route>
         </Routes>
       </Suspense>
     </>

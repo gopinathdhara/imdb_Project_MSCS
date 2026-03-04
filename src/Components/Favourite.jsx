@@ -7,12 +7,12 @@ import {
   sortRatingAsc1,
   sortPopularityDesc1,
   sortPopularityAsc1,
-} from "../Redux/watchlistSlice";
+} from "../Redux/favouriteSlice";
 
-function WatchList() {
+function Favourite() {
   // usestate hook
   const [search, setSearch] = useState("");
-  const watchList = useSelector((state) => state.watch_list.watchlist);
+  const favouriteList = useSelector((state) => state.favourites.favouritelist);
   const dispatch = useDispatch();
   const genreIds = {
     28: "Action",
@@ -37,7 +37,7 @@ function WatchList() {
   };
   // includes return true if string matches with array item else false
   // calls when component rerender after putting values in search box state changes
-  let filtered_movies = watchList.filter((item) =>
+  let filtered_movies = favouriteList.filter((item) =>
     item.title.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -61,14 +61,14 @@ function WatchList() {
   return (
     <>
       <div className="text-2xl font-bold text-center m-5">
-        <h1>WatchList Movies</h1>
+        <h1>Favourite Movies</h1>
       </div>
       <div className="flex justify-center">
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search Movies"
+          placeholder="Search Favourite Movies"
           className="h-[2rem] w-[20rem] px-3 border border-gray-500 mb-5 rounded"
         />
       </div>
@@ -102,7 +102,7 @@ function WatchList() {
                   <td className="py-2 ">{genreIds[item?.genre_ids?.[0]]}</td>
                   <td>
                     <Link to={`/movie-details/${item.id}`}>
-                      <button class="mybutton1"> Details</button>
+                      <button class="mybutton2"> Details</button>
                     </Link>
                   </td>
                 </tr>
@@ -115,4 +115,4 @@ function WatchList() {
   );
 }
 
-export default WatchList;
+export default Favourite;
