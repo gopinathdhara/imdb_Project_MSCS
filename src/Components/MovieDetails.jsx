@@ -4,6 +4,10 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addWatchList, removeWatchList } from "../Redux/watchlistSlice";
 import { addFavouriteList, removeFavouriteList } from "../Redux/favouriteSlice";
+import { FaFilm } from "react-icons/fa";
+import { FaPlayCircle } from "react-icons/fa";
+import { BiMoviePlay } from "react-icons/bi";
+import { FaPlay } from "react-icons/fa";
 
 function MovieDetails() {
   const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
@@ -17,6 +21,11 @@ function MovieDetails() {
   const [similarMovies, setSimilarMovies] = useState([]);
   const [similarLoading, setSimilarLoading] = useState(false);
   const [similarError, setSimilarError] = useState(false);
+
+  // for movie trailer
+  const [movieTrailer, setMovieTrailer] = useState("");
+  const [trailerLoading, setTrailerLoading] = useState(false);
+  const [trailerError, setTrailerError] = useState(false);
 
   // get global redux state value
   const favouriteList = useSelector((state) => state.favourites.favouritelist);
@@ -48,6 +57,8 @@ function MovieDetails() {
     dispatch(removeFavouriteList(movieobj));
   }
 
+  //########## fetch Movie Details #####################
+
   useEffect(() => {
     setLoading(true);
     setError(false);
@@ -74,6 +85,8 @@ function MovieDetails() {
     fetchMovieDetails();
   }, []);
 
+  //##########fetch similar movies ##################
+
   useEffect(() => {
     setSimilarLoading(true);
     setSimilarError(false);
@@ -88,7 +101,7 @@ function MovieDetails() {
             Authorization: `Bearer ${TOKEN}`,
           },
         });
-        console.log(response.data.results);
+        //console.log(response.data.results);
         setSimilarMovies(response.data.results);
         setSimilarLoading(false);
         setSimilarError(false);
@@ -100,6 +113,42 @@ function MovieDetails() {
     }
     fetchSimilarMovies();
   }, []);
+
+  // ############## fetch movie trailer ###################
+
+  useEffect(() => {
+    setTrailerLoading(true);
+    setTrailerError(false);
+    async function fetchMovieTrailer() {
+      try {
+        const url = `https://api.themoviedb.org/3/movie/${id}/videos`;
+
+        const response = await axios.get(url, {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        });
+        console.log("MovieTrailer");
+        console.log(response.data.results);
+
+        let trailer = response.data.results.find(
+          (item) => item.type === "Trailer",
+        );
+        //console.log(trailer);
+        setMovieTrailer(trailer.key);
+        setTrailerLoading(false);
+        setTrailerError(false);
+      } catch (e) {
+        setTrailerLoading(false);
+        setTrailerError(true);
+        console.log(e);
+      }
+    }
+    fetchMovieTrailer();
+  }, []);
+
+  //################################################################
 
   //   if (loading) return <div className="text-center mt-10">Loading...</div>;
   if (loading)
@@ -171,7 +220,11 @@ function MovieDetails() {
 
   return (
     <>
-      <h1 className="text-4xl md:text-4xl font-extrabold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent mb-6">
+      <h1
+        className="text-3xl md:text-3xl font-extrabold text-orange-500 flex items-center justify-center gap-3 mb-6"
+        style={{ marginTop: "20px" }}
+      >
+        <FaFilm size={32} />
         Movie Details
       </h1>
 
@@ -275,9 +328,54 @@ function MovieDetails() {
         </div>
       </div>
       <h1
-        className="text-4xl md:text-4xl font-extrabold bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent mb-6"
+        className="text-3xl md:text-3xl font-bold text-emerald-500 text-center mb-6 flex items-center justify-center gap-3"
         style={{ marginTop: "20px" }}
       >
+        <FaPlayCircle size={32} /> Movie Trailer
+      </h1>
+
+      {trailerLoading && (
+        <div className="flex justify-center items-center mt-6">
+          <div className="text-xl font-semibold text-gray-500 animate-pulse">
+            Loading Trailer...
+          </div>
+        </div>
+      )}
+      {trailerError && (
+        <div className="flex justify-center items-center mt-6">
+          <div className="text-xl font-semibold text-red-500">
+            ❌ Failed to load trailer
+          </div>
+        </div>
+      )}
+      {!trailerLoading && !trailerError && movieTrailer && (
+        <div className="flex justify-center mt-6">
+          <iframe
+            className="rounded-xl shadow-lg"
+            width="900"
+            height="500"
+            src={`https://www.youtube.com/embed/${movieTrailer}`}
+            title="Movie Trailer"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+      <div className="flex justify-center mt-8">
+        <a
+          href={`https://www.google.com/search?q=${movie?.title}+watch+online`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-red-600 text-white px-7 py-3 rounded-xl text-lg font-semibold hover:bg-red-700 transition duration-300 shadow-lg flex items-center gap-3"
+        >
+          <FaPlay className="text-white" />
+          Watch Full Movie
+        </a>
+      </div>
+      <h1
+        className="text-3xl md:text-3xl font-extrabold text-blue-500 flex items-center justify-center gap-3 mb-6"
+        style={{ marginTop: "20px" }}
+      >
+        <BiMoviePlay size={32} />
         Similar Movies
       </h1>
       <div

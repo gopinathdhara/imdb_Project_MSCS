@@ -23,10 +23,32 @@ function App() {
       {/* sharing same date between 2 components. app is closest common parent component it is called Lifting State Up*/}
       {/* remove passing props as using redux */}
 
+      {/* This project is not using the IMDb API directly. Most likely you are using
+      the API from The Movie Database (TMDB), which provides movie data that is
+      very similar to the data shown on IMDb. But IMDb is the original movie
+      database website, and your project is inspired by it. */}
+
+      {/* User → IMDb
+        ↓
+Check movie details
+        ↓
+Watch trailer
+        ↓
+Read ratings / reviews
+        ↓
+Click "Watch on Prime Video"
+        ↓
+Redirect to streaming platform
+        ↓
+Watch full movie there */}
+
+      {/* original website https://www.imdb.com/
+deployed website https://imdb-mscs.netlify.app/ */}
+
       <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-           <Route path="/movies" end element={<Home />}></Route>
+          <Route path="/movies" end element={<Home />}></Route>
           <Route path="/watchlist" element={<WatchList />}></Route>
           <Route path="/movie-details/:id" element={<MovieDetails />}></Route>
           <Route path="/favouritelist" element={<Favourite />}></Route>

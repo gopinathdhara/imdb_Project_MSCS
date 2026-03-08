@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import Banner from "./Banner";
 import Movies from "./Movies";
 
-function Home({ watchList, setWatchList }) {
+function Home() {
   return (
     <>
       <Banner />
-      <Movies  watchList={watchList} setWatchList={setWatchList} />
+      <Movies  />
     </>
   );
 }
