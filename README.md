@@ -32,6 +32,7 @@ https://imdb-mscs.netlify.app/
 * 🔃 Sort Watchlist (Ascending / Descending)
 * 🔍 Search Inside Watchlist
 * ▶ Redirect to Watch Full Movie
+* 🪝 Reusable Custom Hooks for cleaner and reusable logic
 * 🧠 Global State Management using Redux Toolkit
 * ⚡ Fast Development with Vite
 * 🎨 Responsive UI using Tailwind CSS
@@ -53,24 +54,18 @@ https://imdb-mscs.netlify.app/
 
 ---
 
-⚡ Performance Optimization
+## ⚡ Performance Optimization
 
 To ensure smooth performance and efficient rendering, several optimization techniques were implemented:
 
-Debouncing to reduce unnecessary API calls during movie search
-
-Lazy Loading using React.lazy() and Suspense to load components only when needed
-
-Code Splitting to reduce initial bundle size
-
-Efficient State Management using Redux Toolkit
-
-Conditional Rendering to avoid unnecessary UI updates
-
-Optimized API Calls using Axios
-
-Reusable Components to maintain clean and efficient code structure
-
+- **Debouncing** to reduce unnecessary API calls during movie search
+- **Lazy Loading** using `React.lazy()` and `Suspense` to load components only when needed
+- **Code Splitting** to reduce the initial bundle size
+- **Efficient State Management** using Redux Toolkit
+- **Conditional Rendering** to avoid unnecessary UI updates
+- **Optimized API Calls** using Axios
+- **Reusable Components** to maintain clean and modular code structure
+- **Custom Hooks** for reusable trailer fetching and component logic
 
 ---
 
