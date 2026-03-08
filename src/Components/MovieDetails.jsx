@@ -8,6 +8,7 @@ import { FaFilm } from "react-icons/fa";
 import { FaPlayCircle } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
+import useMovieTrailer from "../hooks/useMovieTrailer";
 
 function MovieDetails() {
   const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
@@ -22,10 +23,9 @@ function MovieDetails() {
   const [similarLoading, setSimilarLoading] = useState(false);
   const [similarError, setSimilarError] = useState(false);
 
-  // for movie trailer
-  const [movieTrailer, setMovieTrailer] = useState("");
-  const [trailerLoading, setTrailerLoading] = useState(false);
-  const [trailerError, setTrailerError] = useState(false);
+  // for movie trailer custom hook
+
+  const { movieTrailerKey, trailerLoading, trailerError } = useMovieTrailer(id);
 
   // get global redux state value
   const favouriteList = useSelector((state) => state.favourites.favouritelist);
@@ -113,42 +113,6 @@ function MovieDetails() {
     }
     fetchSimilarMovies();
   }, []);
-
-  // ############## fetch movie trailer ###################
-
-  useEffect(() => {
-    setTrailerLoading(true);
-    setTrailerError(false);
-    async function fetchMovieTrailer() {
-      try {
-        const url = `https://api.themoviedb.org/3/movie/${id}/videos`;
-
-        const response = await axios.get(url, {
-          headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${TOKEN}`,
-          },
-        });
-        console.log("MovieTrailer");
-        console.log(response.data.results);
-
-        let trailer = response.data.results.find(
-          (item) => item.type === "Trailer",
-        );
-        //console.log(trailer);
-        setMovieTrailer(trailer.key);
-        setTrailerLoading(false);
-        setTrailerError(false);
-      } catch (e) {
-        setTrailerLoading(false);
-        setTrailerError(true);
-        console.log(e);
-      }
-    }
-    fetchMovieTrailer();
-  }, []);
-
-  //################################################################
 
   //   if (loading) return <div className="text-center mt-10">Loading...</div>;
   if (loading)
@@ -348,16 +312,23 @@ function MovieDetails() {
           </div>
         </div>
       )}
-      {!trailerLoading && !trailerError && movieTrailer && (
+      {!trailerLoading && !trailerError && movieTrailerKey && (
         <div className="flex justify-center mt-6">
           <iframe
             className="rounded-xl shadow-lg"
             width="900"
             height="500"
-            src={`https://www.youtube.com/embed/${movieTrailer}`}
+            src={`https://www.youtube.com/embed/${movieTrailerKey}`}
             title="Movie Trailer"
             allowFullScreen
           ></iframe>
+        </div>
+      )}
+      {!trailerLoading && !trailerError && !movieTrailerKey && (
+        <div className="flex justify-center items-center mt-6">
+          <div className="px-6 py-3 rounded-xl bg-yellow-100 text-yellow-700 font-semibold shadow-md">
+            🎬 No trailer available for this movie
+          </div>
         </div>
       )}
       <div className="flex justify-center mt-8">
