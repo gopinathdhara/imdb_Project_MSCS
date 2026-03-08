@@ -72,12 +72,42 @@ To ensure smooth performance and efficient rendering, several optimization techn
 ## 📂 Project Structure
 
 ```
-src/
-├── components/
-├── pages/
-├── redux/
-├── App.jsx
-└── main.jsx
+my-imdb-app/
+│
+├── public/
+│
+├── src/
+│ │
+│ ├── assets/ # Images and static assets
+│ │
+│ ├── Components/ # UI Components
+│ │ ├── Banner.jsx
+│ │ ├── Favourite.jsx
+│ │ ├── Home.jsx
+│ │ ├── MovieDetails.jsx
+│ │ ├── Movies.jsx
+│ │ ├── NavBar.jsx
+│ │ └── WatchList.jsx
+│ │
+│ ├── hooks/ # Custom React Hooks
+│ │ └── useMovieTrailer.js
+│ │
+│ ├── Redux/ # Redux Toolkit state management
+│ │ ├── store.jsx
+│ │ ├── movieSlice.jsx
+│ │ ├── paginationSlice.jsx
+│ │ ├── watchlistSlice.jsx
+│ │ ├── favouriteSlice.jsx
+│ │ └── fetchMovies.jsx
+│ │
+│ ├── App.jsx # Main application component
+│ ├── main.jsx # React entry point
+│ ├── App.css
+│ └── index.css
+│
+├── .env # Environment variables (TMDB API Token)
+└── package.json
+
 ```
 
 ---
