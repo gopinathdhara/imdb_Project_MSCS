@@ -9,8 +9,11 @@ import { FaPlayCircle } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
 import { FaPlay } from "react-icons/fa";
 import useMovieTrailer from "../hooks/useMovieTrailer";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function MovieDetails() {
+  const navigate = useNavigate();
   const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -83,7 +86,7 @@ function MovieDetails() {
       }
     }
     fetchMovieDetails();
-  }, []);
+  }, [id]);
 
   //##########fetch similar movies ##################
 
@@ -358,24 +361,29 @@ function MovieDetails() {
             key={m.id}
             className="rounded-xl overflow-hidden bg-white shadow hover:shadow-lg transition cursor-pointer"
           >
-            <a href={`/movie-details/${m.id}`}>
-              <div
-                className="h-[220px] bg-cover bg-center"
-                style={{
-                  backgroundImage: m.poster_path
-                    ? `url(https://image.tmdb.org/t/p/w500/${m.poster_path})`
-                    : "none",
-                }}
-              />
-              <div className="p-2">
-                <p className="font-semibold text-sm line-clamp-2">
-                  {m.title || m.name}
-                </p>
-                <p className="text-xs text-gray-600 mt-1">
-                  ⭐ {m.vote_average?.toFixed(1)} • 📅 {m.release_date || "N/A"}
-                </p>
-              </div>
-            </a>
+            <div
+              className="h-[220px] bg-cover bg-center"
+              style={{
+                backgroundImage: m.poster_path
+                  ? `url(https://image.tmdb.org/t/p/w500/${m.poster_path})`
+                  : "none",
+              }}
+            />
+            <button
+              type="button"
+              className="mybutton w-full"
+              onClick={() => navigate(`/movie-details/${m.id}`)}
+            >
+              View Details
+            </button>
+            <div className="p-2">
+              <p className="font-semibold text-sm line-clamp-2">
+                {m.title || m.name}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                ⭐ {m.vote_average?.toFixed(1)} • 📅 {m.release_date || "N/A"}
+              </p>
+            </div>
           </div>
         ))}
       </div>

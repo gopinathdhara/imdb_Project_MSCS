@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { ThemeContext } from "../Context/ThemeContext";
+import { useContext } from "react";
 import {
   sortRatingDesc1,
   sortRatingAsc1,
@@ -10,6 +12,7 @@ import {
 } from "../Redux/favouriteSlice";
 
 function Favourite() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   // usestate hook
   const [search, setSearch] = useState("");
   const favouriteList = useSelector((state) => state.favourites.favouritelist);
@@ -60,7 +63,14 @@ function Favourite() {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center m-5">
+      <div
+        className={
+          theme === "dark"
+            ? "bg-black text-white text-2xl font-bold text-center m-5"
+            : "bg-white text-black text-2xl font-bold text-center m-5"
+        }
+      >
+        {/* <div className="text-2xl font-bold text-center m-5"> */}
         <h1>Favourite Movies</h1>
       </div>
       <div className="flex justify-center">
@@ -73,9 +83,27 @@ function Favourite() {
         />
       </div>
       <div className="px-4  flex justify-evenly flex-wrap text-center gap-8">
-        <table className="w-full border border-gray-200 text-gray-500">
-          <thead>
-            <tr className="bg-gray-50">
+        <table
+          className={`w-full border ${
+            theme === "dark"
+              ? "border-gray-700 text-white"
+              : "border-gray-300 text-black bg-white"
+          }`}
+        >
+          <thead
+            className={
+              theme === "dark"
+                ? "bg-gray-800 text-white"
+                : "bg-gray-200 text-black"
+            }
+          >
+            <tr
+              className={
+                theme === "dark"
+                  ? "border-b border-gray-700"
+                  : "border-b border-gray-300"
+              }
+            >
               <th className="py-2 ">Title</th>
               <th className="py-2 ">
                 <button onClick={sortRatingDesc}>↓</button>
@@ -88,14 +116,28 @@ function Favourite() {
                 <button onClick={sortPopularityAsc}>↑</button>
               </th>
               <th className="py-2 ">Genre</th>
+              <th></th>
             </tr>
           </thead>
-          <tbody className="divide-y border border-gray-100">
+         <tbody
+            className={
+              theme === "dark"
+                ? "divide-y divide-gray-700"
+                : "divide-y divide-gray-300"
+            }
+          >
             {filtered_movies?.map((item, index) => {
               const imgPath = item.backdrop_path || item.poster_path;
 
               return (
-                <tr key={item.id}>
+                <tr
+                  className={
+                    theme === "dark"
+                      ? "border-b border-gray-700 text-white"
+                      : "border-b border-gray-300 text-black"
+                  }
+                  key={item.id}
+                >
                   <td className="py-2 ">{item.title}</td>
                   <td className="py-2 ">{item.vote_average}</td>
                   <td className="py-2 ">{item.popularity}</td>

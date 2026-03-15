@@ -72,8 +72,9 @@
   transform: scale(1.05);
 }
 .nav-bar-cls {
-  background-color: green;
-  color: white;
+  /* background-color: green; */
+  /* color: white; */
+  color: black;
   padding: 10px 20px;
   border-radius: 10px;
   display: flex;
@@ -103,7 +104,7 @@
   cursor: pointer;
 }
 .nav-link {
-  color: white;
+  /* color: black; */
   text-decoration: none;
   font-weight: 600;
   padding: 6px 12px;

@@ -8,8 +8,11 @@ import {
   sortPopularityDesc1,
   sortPopularityAsc1,
 } from "../Redux/watchlistSlice";
+import { ThemeContext } from "../Context/ThemeContext";
+import { useContext } from "react";
 
 function WatchList() {
+  const { theme, toggleTheme } = useContext(ThemeContext);
   // usestate hook
   const [search, setSearch] = useState("");
   const watchList = useSelector((state) => state.watch_list.watchlist);
@@ -60,7 +63,13 @@ function WatchList() {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center m-5">
+      <div
+        className={
+          theme === "dark"
+            ? "bg-black text-white text-2xl font-bold text-center m-5"
+            : "bg-white text-black text-2xl font-bold text-center m-5"
+        }
+      >
         <h1>WatchList Movies</h1>
       </div>
       <div className="flex justify-center">
@@ -73,9 +82,27 @@ function WatchList() {
         />
       </div>
       <div className="px-4  flex justify-evenly flex-wrap text-center gap-8">
-        <table className="w-full border border-gray-200 text-gray-500">
-          <thead>
-            <tr className="bg-gray-50">
+        <table
+          className={`w-full border ${
+            theme === "dark"
+              ? "border-gray-700 text-white"
+              : "border-gray-300 text-black bg-white"
+          }`}
+        >
+          <thead
+            className={
+              theme === "dark"
+                ? "bg-gray-800 text-white"
+                : "bg-gray-200 text-black"
+            }
+          >
+            <tr
+              className={
+                theme === "dark"
+                  ? "border-b border-gray-700 text-white"
+                  : "border-b border-gray-300 text-black"
+              }
+            >
               <th className="py-2 ">Title</th>
               <th className="py-2 ">
                 <button onClick={sortRatingDesc}>↓</button>
@@ -88,9 +115,16 @@ function WatchList() {
                 <button onClick={sortPopularityAsc}>↑</button>
               </th>
               <th className="py-2 ">Genre</th>
+              <th></th>
             </tr>
           </thead>
-          <tbody className="divide-y border border-gray-100">
+          <tbody
+            className={
+              theme === "dark"
+                ? "divide-y divide-gray-700"
+                : "divide-y divide-gray-300"
+            }
+          >
             {filtered_movies?.map((item, index) => {
               const imgPath = item.backdrop_path || item.poster_path;
 

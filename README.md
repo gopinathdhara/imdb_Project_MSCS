@@ -4,7 +4,7 @@ This project does **not use the IMDb API directly**. Instead, it uses the API fr
 
 **IMDb** is the original movie database website, and this project is **inspired by the IMDb platform**.
 
-This is a modern movie browsing web application built using **React + Redux Toolkit**, allowing users to explore trending movies, search for films, watch trailers, and manage movie lists using the TMDB API.
+This is a modern movie browsing web application built using **React + Redux Toolkit + Context API**, allowing users to explore trending movies, search for films, add Watchlist , add Favourite List, watch trailers, and manage movie lists using the TMDB API.
 
 This project was developed as part of my **Master of Science in Computer Science (MSCS)** learning journey.
 
@@ -21,6 +21,7 @@ https://imdb-mscs.netlify.app/
 ## 📌 Features
 
 * 🔥 Browse Trending Movies
+
 * 🔎 Search Movies
 * 📄 Pagination Support
 * ⭐ View Movie Details
@@ -33,6 +34,7 @@ https://imdb-mscs.netlify.app/
 * 🔍 Search Inside Watchlist
 * ▶ Redirect to Watch Full Movie
 * 🪝 Reusable Custom Hooks for cleaner and reusable logic
+* 🌙 Dark / Light Theme Toggle using React Context API
 * 🧠 Global State Management using Redux Toolkit
 * ⚡ Fast Development with Vite
 * 🎨 Responsive UI using Tailwind CSS
@@ -45,6 +47,7 @@ https://imdb-mscs.netlify.app/
 
 * React.js
 * Redux Toolkit
+* Context API
 * Vite
 * Tailwind CSS
 * Axios
@@ -61,7 +64,7 @@ To ensure smooth performance and efficient rendering, several optimization techn
 - **Debouncing** to reduce unnecessary API calls during movie search
 - **Lazy Loading** using `React.lazy()` and `Suspense` to load components only when needed
 - **Code Splitting** to reduce the initial bundle size
-- **Efficient State Management** using Redux Toolkit
+- **Efficient State Management** using Redux Toolkit and Context API
 - **Conditional Rendering** to avoid unnecessary UI updates
 - **Optimized API Calls** using Axios
 - **Reusable Components** to maintain clean and modular code structure
@@ -78,9 +81,9 @@ my-imdb-app/
 │
 ├── src/
 │ │
-│ ├── assets/ # Images and static assets
+│ ├── assets/                  # Images and static assets
 │ │
-│ ├── Components/ # UI Components
+│ ├── Components/              # UI Components
 │ │ ├── Banner.jsx
 │ │ ├── Favourite.jsx
 │ │ ├── Home.jsx
@@ -89,10 +92,13 @@ my-imdb-app/
 │ │ ├── NavBar.jsx
 │ │ └── WatchList.jsx
 │ │
-│ ├── hooks/ # Custom React Hooks
+│ ├── Context/                 # Context API for global UI state
+│ │ └── ThemeContext.jsx
+│ │
+│ ├── hooks/                   # Custom React Hooks
 │ │ └── useMovieTrailer.js
 │ │
-│ ├── Redux/ # Redux Toolkit state management
+│ ├── Redux/                   # Redux Toolkit state management
 │ │ ├── store.jsx
 │ │ ├── movieSlice.jsx
 │ │ ├── paginationSlice.jsx
@@ -100,12 +106,12 @@ my-imdb-app/
 │ │ ├── favouriteSlice.jsx
 │ │ └── fetchMovies.jsx
 │ │
-│ ├── App.jsx # Main application component
-│ ├── main.jsx # React entry point
+│ ├── App.jsx                  # Main application component
+│ ├── main.jsx                 # React entry point
 │ ├── App.css
 │ └── index.css
 │
-├── .env # Environment variables (TMDB API Token)
+├── .env                       # Environment variables (TMDB API Token)
 └── package.json
 
 ```
